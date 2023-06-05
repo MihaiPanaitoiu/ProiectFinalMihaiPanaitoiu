@@ -1,12 +1,9 @@
-﻿namespace Data.Models
+﻿namespace ProiectFinalMihaiPanaitoiu.Controllers.DTOS
 {
-    public class Student
+    public class StudentToCreateDto
     {
-        public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public int Age { get; set; }
-        public Address Address { get; set; }
-
     }
 }
