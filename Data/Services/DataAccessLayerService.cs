@@ -1,38 +1,24 @@
 ﻿using Data.Exceptions;
 using Data.Models;
+using Data.Models.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data
 {
-    public partial class DataAccessLayerSingleton
+    public partial class DataAccessLayerService : IDataAccessLayerService
     {
-        #region singleton
-        private DataAccessLayerSingleton()
+        private readonly SchoolDbContext ctx;
+        public DataAccessLayerService(SchoolDbContext ctx)
         {
-            
+            this.ctx = ctx;
         }
-        private static DataAccessLayerSingleton instance;
-        public static DataAccessLayerSingleton Instance {
-            get 
-            {
-                if (instance == null)
-                {
-                    instance = new DataAccessLayerSingleton();
-                }
-                return instance;
-            } 
-        }
-        #endregion
 
-        public IEnumerable<Student> GetStudents()
-        {
-            using var ctx = new SchoolDbContext();
-            return ctx.Students.ToList();
-        }
+
+        public IEnumerable<Student> GetStudents() => ctx.Students.ToList();
+ 
 
         public Student GetStudentById(int id)
         {
-            using var ctx = new SchoolDbContext();
             var student = ctx.Students.FirstOrDefault(s => s.Id == id);
             if (student == null)
             {
@@ -43,7 +29,6 @@ namespace Data
 
         public Student CreateStudent(Student student)
         {
-            using var ctx = new SchoolDbContext();
             if (ctx.Students.Any(x => x.Id == student.Id))
             {
                 throw new Exception("Error creating the student");
@@ -55,9 +40,6 @@ namespace Data
 
         public Student UpdateStudent(Student studentToUpdate)
         {
-            using var ctx = new SchoolDbContext();
-
-
             var student = ctx.Students.FirstOrDefault(s => s.Id == studentToUpdate.Id);
 
             if (student == null)
@@ -76,8 +58,6 @@ namespace Data
 
         public Address UpdateStudentAddress(int studentId, Address addressToUpdate)
         {
-            using var ctx = new SchoolDbContext();
-
             var student = ctx.Students.Include(s => s.Address).FirstOrDefault(s => s.Id == studentId);
 
             if (student == null)
@@ -101,7 +81,6 @@ namespace Data
 
         public void DeleteStudent(int studentId)
         {
-            using var ctx = new SchoolDbContext();
             var student = ctx.Students.FirstOrDefault(s => s.Id == studentId);
 
             if (student == null)

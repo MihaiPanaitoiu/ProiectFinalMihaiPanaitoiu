@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Data;
+﻿using Microsoft.AspNetCore.Mvc;
 using Data.Exceptions;
 using ProiectFinalMihaiPanaitoiu.Controllers.DTOS;
 using ProiectFinalMihaiPanaitoiu.Utils;
-using Microsoft.SqlServer.Server;
 using Data.Models;
+using Data.Models.Interfaces;
 
 namespace ProiectFinalMihaiPanaitoiu.Controllers
 {
@@ -13,18 +11,25 @@ namespace ProiectFinalMihaiPanaitoiu.Controllers
     [ApiController]
     public class StudentsController : ControllerBase
     {
+        private readonly IDataAccessLayerService dals;
+
+        public StudentsController(IDataAccessLayerService dals)
+        {
+            this.dals = dals;
+        }
+
         /// <summary>
         /// Seed database
         /// </summary>
         [HttpPost("seed")]
-        public void Seed() => DataAccessLayerSingleton.Instance.Seed();
+        public void Seed() => dals.Seed();
 
         /// <summary>
         /// Returns all the students
         /// </summary>
         [HttpGet]
         public IEnumerable<StudentToGetDto> GetStudents() =>
-            DataAccessLayerSingleton.Instance.GetStudents().Select(x => x.ToDto()).ToList();
+           dals.GetStudents().Select(x => x.ToDto()).ToList();
 
         /// <summary>
         /// returns student by id
@@ -36,7 +41,7 @@ namespace ProiectFinalMihaiPanaitoiu.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound ,Type=typeof(string))]
         public ActionResult<StudentToGetDto> GetStudentById(int id) {
             try {
-                return Ok(DataAccessLayerSingleton.Instance.GetStudentById(id).ToDto());
+                return Ok(dals.GetStudentById(id).ToDto());
             }
             catch (InvalidIdException e) {
                 return NotFound(e.Message);
@@ -55,7 +60,7 @@ namespace ProiectFinalMihaiPanaitoiu.Controllers
         {
             try
             {
-                return Created("success", DataAccessLayerSingleton.Instance.CreateStudent(studentToCreate.ToEntity()).ToDto());
+                return Created("success",dals.CreateStudent(studentToCreate.ToEntity()).ToDto());
             } catch (InvalidIdException e)
             {
                 return BadRequest(e.Message);
@@ -76,7 +81,7 @@ namespace ProiectFinalMihaiPanaitoiu.Controllers
         {
             try
             {
-                return Ok(DataAccessLayerSingleton.Instance.UpdateStudent(studentToUpdate.ToEntity()).ToDto());
+                return Ok(dals.UpdateStudent(studentToUpdate.ToEntity()).ToDto());
             } catch (InvalidIdException e)
             {
                 return NotFound(e.Message);
@@ -95,7 +100,7 @@ namespace ProiectFinalMihaiPanaitoiu.Controllers
         {
             try
             {
-                return Ok(DataAccessLayerSingleton.Instance.UpdateStudentAddress(id, addressToUpdate.ToEntity()));
+                return Ok(dals.UpdateStudentAddress(id, addressToUpdate.ToEntity()));
             } catch (InvalidIdException e)
             {
                 return NotFound(e.Message);
@@ -113,7 +118,7 @@ namespace ProiectFinalMihaiPanaitoiu.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(string))]
         public IActionResult DeleteStudent([FromRoute] int id) {
             try {
-                DataAccessLayerSingleton.Instance.DeleteStudent(id);
+               dals.DeleteStudent(id);
             } catch(InvalidIdException e) {
                 return NotFound(e.Message);
             }

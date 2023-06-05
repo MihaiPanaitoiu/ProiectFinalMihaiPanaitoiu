@@ -7,13 +7,11 @@ using System.Threading.Tasks;
 
 namespace Data
 {
-    public partial class DataAccessLayerSingleton
+    public partial class DataAccessLayerService
     {
         #region Seed
         public void Seed()
         {
-            using var ctx = new SchoolDbContext();
-
             ctx.Add(new Student
             {
                 FirstName = "Ionica",

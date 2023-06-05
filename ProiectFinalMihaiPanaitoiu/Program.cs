@@ -1,9 +1,17 @@
+using Data;
+using Data.Models.Interfaces;
+using Data.Models;
+using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
+var dbConString = builder.Configuration.GetConnectionString("SqlDbConnString");
 
 // Add services to the container.
+builder.Services.AddDbContext<SchoolDbContext>(options => options.UseSqlServer(dbConString));
+
+builder.Services.AddScoped<IDataAccessLayerService, DataAccessLayerService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
