@@ -5,6 +5,7 @@ using Data.Exceptions;
 using ProiectFinalMihaiPanaitoiu.Controllers.DTOS;
 using ProiectFinalMihaiPanaitoiu.Utils;
 using Microsoft.SqlServer.Server;
+using Data.Models;
 
 namespace ProiectFinalMihaiPanaitoiu.Controllers
 {
@@ -48,8 +49,19 @@ namespace ProiectFinalMihaiPanaitoiu.Controllers
         /// <param name="studentToCreate">student to create data</param>
         /// <returns>created student data</returns>
         [HttpPost]
-        public StudentToGetDto CreateStudent([FromBody] StudentToCreateDto studentToCreate) => 
-            DataAccessLayerSingleton.Instance.CreateStudent(studentToCreate.ToEntity()).ToDto();
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(void))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        public ActionResult<StudentToGetDto> CreateStudent([FromBody] StudentToCreateDto studentToCreate)
+        {
+            try
+            {
+                return Created("success", DataAccessLayerSingleton.Instance.CreateStudent(studentToCreate.ToEntity()).ToDto());
+            } catch (InvalidIdException e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+           
 
         /// <summary>
         /// Updates a student
@@ -57,10 +69,19 @@ namespace ProiectFinalMihaiPanaitoiu.Controllers
         /// <param name="studentToUpdate">student to update data</param>
         /// <param name=""></param>
         /// <returns></returns>
-
         [HttpPatch]
-        public StudentToGetDto UpdateStudent([FromBody] StudentToUpdateDto studentToUpdate) =>
-            DataAccessLayerSingleton.Instance.UpdateStudent(studentToUpdate.ToEntity()).ToDto();
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(void))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(string))]
+        public ActionResult<StudentToGetDto> UpdateStudent([FromBody] StudentToUpdateDto studentToUpdate)
+        {
+            try
+            {
+                return Ok(DataAccessLayerSingleton.Instance.UpdateStudent(studentToUpdate.ToEntity()).ToDto());
+            } catch (InvalidIdException e)
+            {
+                return NotFound(e.Message);
+            }
+        }
 
         /// <summary>
         /// Updates or creates a student address
@@ -68,8 +89,18 @@ namespace ProiectFinalMihaiPanaitoiu.Controllers
         /// <param name="id">Student Id</param>
         /// <param name="addressToUpdate">Address</param>
         [HttpPut("${id}")]
-        public void UpdateStudentAddress([FromRoute] int id, [FromBody] AddressToUpdateDto addressToUpdate) =>
-            DataAccessLayerSingleton.Instance.UpdateStudentAddress(id, addressToUpdate.ToEntity());
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(void))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(string))]
+        public ActionResult<Address> UpdateStudentAddress([FromRoute] int id, [FromBody] AddressToUpdateDto addressToUpdate)
+        {
+            try
+            {
+                return Ok(DataAccessLayerSingleton.Instance.UpdateStudentAddress(id, addressToUpdate.ToEntity()));
+            } catch (InvalidIdException e)
+            {
+                return NotFound(e.Message);
+            }
+        }
 
 
         /// <summary>

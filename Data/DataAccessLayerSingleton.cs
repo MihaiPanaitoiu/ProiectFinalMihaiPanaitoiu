@@ -33,7 +33,12 @@ namespace Data
         public Student GetStudentById(int id)
         {
             using var ctx = new SchoolDbContext();
-            return ctx.Students.FirstOrDefault(s => s.Id == id);
+            var student = ctx.Students.FirstOrDefault(s => s.Id == id);
+            if (student == null)
+            {
+                throw new InvalidIdException($"Student not found with id {id}");
+            }
+            return student;
         }
 
         public Student CreateStudent(Student student)
@@ -41,7 +46,7 @@ namespace Data
             using var ctx = new SchoolDbContext();
             if (ctx.Students.Any(x => x.Id == student.Id))
             {
-                //throw exception
+                throw new Exception("Error creating the student");
             }
             ctx.Add(student);
             ctx.SaveChanges();
@@ -57,7 +62,7 @@ namespace Data
 
             if (student == null)
             {
-                //throw exception
+                throw new InvalidIdException($"Student not found with id {studentToUpdate.Id}");
             }
 
             student.FirstName = studentToUpdate.FirstName;
@@ -69,7 +74,7 @@ namespace Data
             return student;
         }
 
-        public void UpdateStudentAddress(int studentId, Address addressToUpdate)
+        public Address UpdateStudentAddress(int studentId, Address addressToUpdate)
         {
             using var ctx = new SchoolDbContext();
 
@@ -77,7 +82,7 @@ namespace Data
 
             if (student == null)
             {
-                //throw exception
+                throw new InvalidIdException($"Student not found with id {studentId}");
             }
 
             if (student.Address == null)
@@ -90,6 +95,8 @@ namespace Data
             student.Address.Number = addressToUpdate.Number;
 
             ctx.SaveChanges();
+
+            return student.Address;
         }
 
         public void DeleteStudent(int studentId)
