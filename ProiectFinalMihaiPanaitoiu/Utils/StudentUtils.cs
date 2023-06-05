@@ -21,7 +21,6 @@ namespace ProiectFinalMihaiPanaitoiu.Utils
             };
         }
 
-          /**
         public static StudentToAritmeticMeanDto ToDto(this (Student, double) studentToAritmeticMean)
         {
 
@@ -37,7 +36,6 @@ namespace ProiectFinalMihaiPanaitoiu.Utils
 
         public static IEnumerable<StudentToAritmeticMeanDto> ToDto(this IEnumerable<(Student, double)> studentToAritmeticMean) 
             => studentToAritmeticMean.Select(x => ToDto(x));
-          **/
 
         public static Student ToEntity(this StudentToCreateDto student)
         {

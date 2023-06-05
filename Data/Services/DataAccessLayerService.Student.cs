@@ -81,10 +81,21 @@ namespace Data.Services
 
         }
 
-        /**
         public IEnumerable<(Student, double)> GetAritmeticMean(SortDirectionEnum sortDir)
-            => ctx.Students.Select(s => new {Student = s, AritmeticMean = s.Marks.Average(m => m.Value)})
-            .ToList().Select(s => (s.Student, s.AritmeticMean));
-        **/
+        {
+            var studentsWithGrades = ctx.Students.Where(s => s.Marks.Any())
+                .Select(s => new { Student = s, AritmeticMean = s.Marks.Average(m => m.Value) });
+           
+            if (sortDir == SortDirectionEnum.Asc)
+            {
+                studentsWithGrades = studentsWithGrades.OrderBy(s => s.AritmeticMean);
+            } else
+            {
+                studentsWithGrades = studentsWithGrades.OrderByDescending(s => s.AritmeticMean);
+            }
+            return studentsWithGrades.ToList().Select(s =>
+                         (s.Student, s.AritmeticMean)
+                    );
+        }
     }
 }

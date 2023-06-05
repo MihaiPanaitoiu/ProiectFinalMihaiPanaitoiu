@@ -99,9 +99,13 @@ namespace ProiectFinalMihaiPanaitoiu.Controllers
             return Ok();
         }
       
-
-       //[HttpGet("/aritmeticMean")]
-        //public IEnumerable<StudentToAritmeticMeanDto> GetAritmeticMean([FromQuery] SortDirectionEnum sortDir)
-          //  => dals.GetAritmeticMean(sortDir).ToDto();
+        /// <summary>
+        /// asdf
+        /// </summary>
+        /// <param name="sortDir"></param>
+        /// <returns></returns>
+       [HttpGet("/aritmeticMean")]
+        public IEnumerable<StudentToAritmeticMeanDto> GetAritmeticMean([FromQuery] SortDirectionEnum sortDir)
+           => dals.GetAritmeticMean(sortDir).ToDto();
     }
 }

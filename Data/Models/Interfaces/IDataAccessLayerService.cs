@@ -15,6 +15,6 @@
         void Seed();
         Student UpdateStudent(Student studentToUpdate);
         Address UpdateStudentAddress(int studentId, Address addressToUpdate);
-        //IEnumerable<(Student, double)> GetAritmeticMean(SortDirectionEnum sortDir);
+        IEnumerable<(Student, double)> GetAritmeticMean(SortDirectionEnum sortDir);
     }
 }
