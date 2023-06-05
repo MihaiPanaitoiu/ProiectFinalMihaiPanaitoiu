@@ -6,7 +6,14 @@ namespace ProiectFinalMihaiPanaitoiu.Controllers.DTOS
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public List<Mark> Marks { get; set; } = new List<Mark>();
-        public List<Student> Students { get; set; } = new List<Student>();
+        public List<CourseToGetStudentMarkDto> StudentMarks { get; set; } = new();
+    }
+    public class CourseToGetStudentMarkDto
+    {
+        public int MarkId { get; set; }
+        public int MarkValue { get; set; }
+        public DateTime? GivenDate { get; set; }
+        public int StudentId { get; set; }
+        public string StudentName { get; set; }
     }
 }

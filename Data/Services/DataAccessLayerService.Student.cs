@@ -74,16 +74,17 @@ namespace Data.Services
 
         public void DeleteStudent(int studentId)
         {
-            var student = ctx.Students.FirstOrDefault(s => s.Id == studentId);
-
-            if (student == null)
-            {
-                throw new InvalidIdException($"Student not found with Id {studentId}");
-            }
-
+            var student = ctx.Students.FirstOrDefault(s => s.Id == studentId) 
+                ?? throw new InvalidIdException($"Student not found with Id {studentId}");
             ctx.Students.Remove(student);
             ctx.SaveChanges();
 
         }
+
+        /**
+        public IEnumerable<(Student, double)> GetAritmeticMean(SortDirectionEnum sortDir)
+            => ctx.Students.Select(s => new {Student = s, AritmeticMean = s.Marks.Average(m => m.Value)})
+            .ToList().Select(s => (s.Student, s.AritmeticMean));
+        **/
     }
 }

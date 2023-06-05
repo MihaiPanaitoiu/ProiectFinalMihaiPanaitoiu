@@ -1,5 +1,6 @@
 ﻿using Data.Models;
 using Data.Models.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Data.Services
 {
@@ -16,6 +17,6 @@ namespace Data.Services
             return course;
         }
 
-        public IEnumerable<Course> GetCourses() => ctx.Courses.ToList();
+        public IEnumerable<Course> GetCourses() => ctx.Courses.Include(s => s.Students).Include(m => m.Marks);
     }
 }

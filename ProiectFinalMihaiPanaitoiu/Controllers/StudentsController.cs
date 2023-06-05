@@ -3,6 +3,7 @@ using Data.Exceptions;
 using ProiectFinalMihaiPanaitoiu.Controllers.DTOS;
 using ProiectFinalMihaiPanaitoiu.Utils;
 using Data.Models.Interfaces;
+using Data.Models;
 
 namespace ProiectFinalMihaiPanaitoiu.Controllers
 {
@@ -41,6 +42,7 @@ namespace ProiectFinalMihaiPanaitoiu.Controllers
             } 
         }
 
+
         /// <summary>
         /// Creates a student
         /// </summary>
@@ -59,7 +61,6 @@ namespace ProiectFinalMihaiPanaitoiu.Controllers
                 return BadRequest(e.Message);
             }
         }
-           
 
         /// <summary>
         /// Updates a student
@@ -97,5 +98,10 @@ namespace ProiectFinalMihaiPanaitoiu.Controllers
             }
             return Ok();
         }
-}
+      
+
+       //[HttpGet("/aritmeticMean")]
+        //public IEnumerable<StudentToAritmeticMeanDto> GetAritmeticMean([FromQuery] SortDirectionEnum sortDir)
+          //  => dals.GetAritmeticMean(sortDir).ToDto();
+    }
 }

@@ -21,6 +21,24 @@ namespace ProiectFinalMihaiPanaitoiu.Utils
             };
         }
 
+          /**
+        public static StudentToAritmeticMeanDto ToDto(this (Student, double) studentToAritmeticMean)
+        {
+
+            return new StudentToAritmeticMeanDto
+            {
+                Id = studentToAritmeticMean.Item1.Id,
+                LastName = studentToAritmeticMean.Item1.LastName,
+                FirstName = studentToAritmeticMean.Item1.FirstName,
+                Age = studentToAritmeticMean.Item1.Age,
+                AritmeticMean = studentToAritmeticMean.Item2,
+            };
+        }
+
+        public static IEnumerable<StudentToAritmeticMeanDto> ToDto(this IEnumerable<(Student, double)> studentToAritmeticMean) 
+            => studentToAritmeticMean.Select(x => ToDto(x));
+          **/
+
         public static Student ToEntity(this StudentToCreateDto student)
         {
             if (student == null)

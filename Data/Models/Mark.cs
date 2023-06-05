@@ -10,7 +10,7 @@ namespace Data.Models
     {
         public int Id { get; set; }
         public int Value { get; set; }
-        public DateTime GivenDate { get; set; }
+        public DateTime GivenDate { get; set; } = DateTime.Now;
         public int? CourseId { get; set; }
         public Course Course { get; set; }
         public int StudentId { get; set; }
