@@ -1,13 +1,9 @@
 ﻿using Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Data.Models.Interfaces;
 
-namespace Data
+namespace Data.Services
 {
-    public partial class DataAccessLayerService
+    public partial class DataAccessLayerService : IDataAccessLayerService
     {
         #region Seed
         public void Seed()

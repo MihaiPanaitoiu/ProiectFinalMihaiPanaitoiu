@@ -1,9 +1,9 @@
-using Data;
 using Data.Models.Interfaces;
 using Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
+using Data.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 var dbConString = builder.Configuration.GetConnectionString("SqlDbConnString");
