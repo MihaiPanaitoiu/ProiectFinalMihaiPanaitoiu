@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProiectFinalMihaiPanaitoiu.DTOS;
 using ProiectFinalMihaiPanaitoiu.Utils;
+using System.ComponentModel.DataAnnotations;
 
 namespace ProiectFinalMihaiPanaitoiu.Controllers
 {
@@ -26,16 +27,8 @@ namespace ProiectFinalMihaiPanaitoiu.Controllers
         [HttpPut("${id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(void))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(string))]
-        public ActionResult<Address> UpdateStudentAddress([FromRoute] int id, [FromBody] AddressToUpdateDto addressToUpdate)
-        {
-            try
-            {
-                return Ok(dals.UpdateStudentAddress(id, addressToUpdate.ToEntity()));
-            }
-            catch (InvalidIdException e)
-            {
-                return NotFound(e.Message);
-            }
-        }
+        public ActionResult<Address> UpdateStudentAddress
+            ([FromRoute] [Range(1, int.MaxValue)]int id, [FromBody] AddressToUpdateDto addressToUpdate) =>
+            Ok(dals.UpdateStudentAddress(id, addressToUpdate.ToEntity()));
     }
 }

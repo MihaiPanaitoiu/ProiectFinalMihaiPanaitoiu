@@ -23,7 +23,7 @@ namespace Data.Services
         {
             if (ctx.Students.Any(x => x.Id == student.Id))
             {
-                throw new Exception("Error creating the student");
+                throw new DuplicatedIdException($"Duplicated student id {student.Id}");
             }
             ctx.Add(student);
             ctx.SaveChanges();
@@ -77,7 +77,6 @@ namespace Data.Services
                 ?? throw new InvalidIdException($"Student not found with Id {studentId}");
             ctx.Students.Remove(student);
             ctx.SaveChanges();
-
         }
 
         public IEnumerable<(Student, double)> GetAritmeticMean(SortDirectionEnum sortDir)
@@ -94,7 +93,7 @@ namespace Data.Services
             }
             return studentsWithGrades.ToList().Select(s =>
                          (s.Student, s.AritmeticMean)
-                    );
+                 );
         }
     }
 }

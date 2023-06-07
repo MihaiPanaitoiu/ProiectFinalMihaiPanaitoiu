@@ -27,24 +27,15 @@ namespace ProiectFinalMihaiPanaitoiu.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(void))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        public ActionResult<CourseToGetDto> CreateCourse([FromBody] CourseToCreateDto courseToCreate)
-        {
-            try
-            {
-                return Created("success", dals.CreateCourse(courseToCreate.ToEntity()).ToDto());
-            }
-            catch (InvalidIdException e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
+        public ActionResult<CourseToGetDto> CreateCourse([FromBody] CourseToCreateDto courseToCreate) => 
+            Created("success", dals.CreateCourse(courseToCreate.ToEntity()).ToDto());
 
         /// <summary>
         /// Returns all Courses
         /// </summary>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(void))]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         public IEnumerable<CourseToGetDto> GetCourses() => dals.GetCourses().Select(x => x.ToDto()).ToList();
     }
 }

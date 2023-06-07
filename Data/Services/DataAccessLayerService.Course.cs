@@ -1,4 +1,5 @@
-﻿using Data.Models;
+﻿using Data.Exceptions;
+using Data.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Services
@@ -9,7 +10,7 @@ namespace Data.Services
         {
             if (ctx.Courses.Any(x => x.Id == course.Id))
             {
-                throw new Exception("Error creating the course");
+                throw new DuplicatedIdException($"Duplicated course id {course.Id}");
             }
             ctx.Add(course);
             ctx.SaveChanges();

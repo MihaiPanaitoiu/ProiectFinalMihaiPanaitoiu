@@ -10,7 +10,7 @@ namespace Data.Services
         {
             if (ctx.Marks.Any(x => x.Id == mark.Id))
             {
-                throw new Exception("Mark already exists");
+                throw new DuplicatedIdException($"Duplicated Mark id {mark.Id}");
             }
             var student = ctx.Students.FirstOrDefault(s => s.Id == mark.StudentId);
 
@@ -32,13 +32,41 @@ namespace Data.Services
             return mark;
         }
 
-        public IEnumerable<Mark> GetMarksByStudentId(int studentId) 
-            => ctx.Marks.Include(c => c.Course).Where(m => m.StudentId == studentId).ToList();
+        public IEnumerable<Mark> GetMarksByStudentId(int studentId) {
+            
+            if (!ctx.Students.Any( s=> s.Id == studentId)) {
+                throw new InvalidIdException($"Invalid student Id {studentId}");
+            }
+
+            return ctx.Marks.Include(c => c.Course).Where(m => m.StudentId == studentId).ToList();
+        }
 
         public IEnumerable<Mark> GetByStudentAndCourse(int studentId, int courseId)
-            => ctx.Marks.Include(c => c.Course).Where(m => m.StudentId == studentId).Where(c => c.Id == courseId).ToList();
+        {
+            if (!ctx.Students.Any(s => s.Id == studentId))
+            {
+                throw new InvalidIdException($"Invalid student Id {studentId}");
+            }
+            if (ctx.Courses.Any(c => c.Id == courseId))
+            {
+                throw new InvalidIdException($"Invalid course Id {courseId}");
+            }
+            return ctx.Marks.Include(c => c.Course).Where(m => m.StudentId == studentId).Where(c => c.Id == courseId).ToList();
+        }
 
-        public double GetAvgByStudentAndCourse(int studentId, int courseId)
-            => ctx.Marks.Where(m => m.StudentId == studentId).Where(m => m.CourseId == courseId).Average(m => m.Value);
+
+        public double GetAvgByStudentAndCourse(int studentId, int courseId) 
+        {
+            if (!ctx.Students.Any(s => s.Id == studentId))
+            {
+                throw new InvalidIdException($"Invalid student Id {studentId}");
+            }
+            if (ctx.Courses.Any(c => c.Id == courseId))
+            {
+                throw new InvalidIdException($"Invalid course Id {courseId}");
+            }
+            return ctx.Marks.Where(m => m.StudentId == studentId).Where(m => m.CourseId == courseId).Average(m => m.Value);
+        }
     }
+
 }

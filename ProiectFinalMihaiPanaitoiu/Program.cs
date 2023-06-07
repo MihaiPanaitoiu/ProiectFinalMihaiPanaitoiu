@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 using Data.Services;
+using ProiectFinalMihaiPanaitoiu.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 var dbConString = builder.Configuration.GetConnectionString("SqlDbConnString");
@@ -12,7 +13,11 @@ builder.Services.AddDbContext<SchoolDbContext>(options => options.UseSqlServer(d
 
 builder.Services.AddScoped<IDataAccessLayerService, DataAccessLayerService>();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<InvalidIdExceptionFilter>();
+    options.Filters.Add<DuplicatedIdExceptionFilter>();
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(o => AddSwaggerDocumentation(o));

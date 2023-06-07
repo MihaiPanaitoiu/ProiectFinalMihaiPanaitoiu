@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProiectFinalMihaiPanaitoiu.DTOS;
 using ProiectFinalMihaiPanaitoiu.Utils;
+using System.ComponentModel.DataAnnotations;
 
 namespace ProiectFinalMihaiPanaitoiu.Controllers
 {
@@ -27,17 +28,8 @@ namespace ProiectFinalMihaiPanaitoiu.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(void))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        public ActionResult<MarkToGetDto> CreateMark([FromBody] MarkToCreateDto markToCreate)
-        {
-            try
-            {
-                return Created("success", dals.CreateMark(markToCreate.ToEntity()).ToDto());
-            }
-            catch (InvalidIdException e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
+        public ActionResult<MarkToGetDto> CreateMark([FromBody] MarkToCreateDto markToCreate) =>
+                Created("success", dals.CreateMark(markToCreate.ToEntity()).ToDto());
 
         /// <summary>
         /// Get student marks by student id
@@ -46,8 +38,9 @@ namespace ProiectFinalMihaiPanaitoiu.Controllers
         /// <returns></returns>
         [HttpGet("{studentId}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(void))]
-        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(string))]
-        public IEnumerable<MarkToGetDto?> GetMarksByStudentId([FromRoute] int studentId) => dals.GetMarksByStudentId(studentId).Select(x => x.ToDto());
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        public IEnumerable<MarkToGetDto?> GetMarksByStudentId([FromRoute] [Range(1, int.MaxValue)]int studentId) =>
+            dals.GetMarksByStudentId(studentId).Select(x => x.ToDto());
 
         /// <summary>
         /// Get student marks by student id and and course id
@@ -56,7 +49,10 @@ namespace ProiectFinalMihaiPanaitoiu.Controllers
         /// <param name="courseId"></param>
         /// <returns></returns>
         [HttpGet("{studentId}/{courseId}")]
-        public IEnumerable<MarkToGetDto?> GetByStudentAndCourse([FromRoute] int studentId, [FromRoute] int courseId)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(void))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        public IEnumerable<MarkToGetDto?> GetByStudentAndCourse
+            ([FromRoute][Range(1, int.MaxValue)] int studentId, [Range(1, int.MaxValue)][FromRoute] int courseId)
             => dals.GetByStudentAndCourse(studentId, courseId).ToDto();
 
         /// <summary>
@@ -66,7 +62,10 @@ namespace ProiectFinalMihaiPanaitoiu.Controllers
         /// <param name="courseId"></param>
         /// <returns></returns>
         [HttpGet("{studentId}/{courseId}/avg")]
-        public double GetAvgByStudentAndCourse([FromRoute] int studentId, [FromRoute] int courseId)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(void))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        public double GetAvgByStudentAndCourse
+            ([FromRoute] [Range(1, int.MaxValue)] int studentId, [FromRoute][Range(1, int.MaxValue)] int courseId)
             => dals.GetAvgByStudentAndCourse(studentId, courseId);
     }
 }
