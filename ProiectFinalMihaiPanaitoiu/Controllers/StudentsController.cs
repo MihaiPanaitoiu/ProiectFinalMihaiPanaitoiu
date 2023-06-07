@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Data.Exceptions;
-using ProiectFinalMihaiPanaitoiu.Controllers.DTOS;
 using ProiectFinalMihaiPanaitoiu.Utils;
-using Data.Models.Interfaces;
 using Data.Models;
+using Data.Services;
+using ProiectFinalMihaiPanaitoiu.DTOS;
 
 namespace ProiectFinalMihaiPanaitoiu.Controllers
 {
@@ -66,7 +66,6 @@ namespace ProiectFinalMihaiPanaitoiu.Controllers
         /// Updates a student
         /// </summary>
         /// <param name="studentToUpdate">student to update data</param>
-        /// <param name=""></param>
         /// <returns></returns>
         [HttpPatch]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(void))]
@@ -100,7 +99,7 @@ namespace ProiectFinalMihaiPanaitoiu.Controllers
         }
       
         /// <summary>
-        /// asdf
+        /// Get student general aritmetic mean in ASC or DESC order
         /// </summary>
         /// <param name="sortDir"></param>
         /// <returns></returns>

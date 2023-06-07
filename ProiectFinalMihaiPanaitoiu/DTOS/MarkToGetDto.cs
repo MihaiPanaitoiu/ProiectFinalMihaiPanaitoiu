@@ -1,6 +1,6 @@
 ﻿using Data.Models;
 
-namespace ProiectFinalMihaiPanaitoiu.Controllers.DTOS
+namespace ProiectFinalMihaiPanaitoiu.DTOS
 {
     public class MarkToGetDto
     {

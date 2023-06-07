@@ -1,9 +1,8 @@
 ﻿using Data.Exceptions;
 using Data.Models;
-using Data.Models.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using ProiectFinalMihaiPanaitoiu.Controllers.DTOS;
+using ProiectFinalMihaiPanaitoiu.DTOS;
 using ProiectFinalMihaiPanaitoiu.Utils;
 
 namespace ProiectFinalMihaiPanaitoiu.Controllers
@@ -40,17 +39,33 @@ namespace ProiectFinalMihaiPanaitoiu.Controllers
             }
         }
 
-        [HttpGet("/{studentId}")]
+        /// <summary>
+        /// Get student marks by student id
+        /// </summary>
+        /// <param name="studentId"></param>
+        /// <returns></returns>
+        [HttpGet("{studentId}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(void))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(string))]
         public IEnumerable<MarkToGetDto?> GetMarksByStudentId([FromRoute] int studentId) => dals.GetMarksByStudentId(studentId).Select(x => x.ToDto());
 
-
-        [HttpGet("/{studentId}/{courseId}")]
+        /// <summary>
+        /// Get student marks by student id and and course id
+        /// </summary>
+        /// <param name="studentId"></param>
+        /// <param name="courseId"></param>
+        /// <returns></returns>
+        [HttpGet("{studentId}/{courseId}")]
         public IEnumerable<MarkToGetDto?> GetByStudentAndCourse([FromRoute] int studentId, [FromRoute] int courseId)
             => dals.GetByStudentAndCourse(studentId, courseId).ToDto();
 
-        [HttpGet("/{studentId}/{courseId}/avg")]
+        /// <summary>
+        /// Get student aritmetic mean by courseid
+        /// </summary>
+        /// <param name="studentId"></param>
+        /// <param name="courseId"></param>
+        /// <returns></returns>
+        [HttpGet("{studentId}/{courseId}/avg")]
         public double GetAvgByStudentAndCourse([FromRoute] int studentId, [FromRoute] int courseId)
             => dals.GetAvgByStudentAndCourse(studentId, courseId);
     }

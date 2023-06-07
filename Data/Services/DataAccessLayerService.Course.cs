@@ -1,5 +1,4 @@
 ﻿using Data.Models;
-using Data.Models.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Services

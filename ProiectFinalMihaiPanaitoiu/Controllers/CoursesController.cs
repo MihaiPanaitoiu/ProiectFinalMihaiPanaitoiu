@@ -1,8 +1,8 @@
 ﻿using Data.Exceptions;
-using Data.Models.Interfaces;
+using Data.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using ProiectFinalMihaiPanaitoiu.Controllers.DTOS;
+using ProiectFinalMihaiPanaitoiu.DTOS;
 using ProiectFinalMihaiPanaitoiu.Utils;
 
 namespace ProiectFinalMihaiPanaitoiu.Controllers
@@ -44,6 +44,7 @@ namespace ProiectFinalMihaiPanaitoiu.Controllers
         /// </summary>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(void))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
         public IEnumerable<CourseToGetDto> GetCourses() => dals.GetCourses().Select(x => x.ToDto()).ToList();
     }
 }

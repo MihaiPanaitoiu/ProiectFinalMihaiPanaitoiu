@@ -1,9 +1,8 @@
 ﻿using Data.Exceptions;
 using Data.Models;
-using Data.Models.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using ProiectFinalMihaiPanaitoiu.Controllers.DTOS;
+using ProiectFinalMihaiPanaitoiu.DTOS;
 using ProiectFinalMihaiPanaitoiu.Utils;
 
 namespace ProiectFinalMihaiPanaitoiu.Controllers

@@ -1,5 +1,5 @@
 ﻿using Data.Models;
-using ProiectFinalMihaiPanaitoiu.Controllers.DTOS;
+using ProiectFinalMihaiPanaitoiu.DTOS;
 
 namespace ProiectFinalMihaiPanaitoiu.Utils
 {

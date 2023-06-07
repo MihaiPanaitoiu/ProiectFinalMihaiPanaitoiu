@@ -1,5 +1,4 @@
-﻿using Data.Models.Interfaces;
-using Data.Models;
+﻿using Data.Models;
 
 namespace Data.Services
 {

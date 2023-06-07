@@ -1,4 +1,4 @@
-﻿namespace ProiectFinalMihaiPanaitoiu.Controllers.DTOS
+﻿namespace ProiectFinalMihaiPanaitoiu.DTOS
 {
     public class StudentToAritmeticMeanDto
     {

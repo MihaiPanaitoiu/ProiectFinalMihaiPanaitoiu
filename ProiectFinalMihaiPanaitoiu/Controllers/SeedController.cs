@@ -1,4 +1,4 @@
-﻿using Data.Models.Interfaces;
+﻿using Data.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

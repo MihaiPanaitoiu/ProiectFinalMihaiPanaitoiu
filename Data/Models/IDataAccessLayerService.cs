@@ -1,4 +1,6 @@
-﻿namespace Data.Models.Interfaces
+﻿using Data.Services;
+
+namespace Data.Models
 {
     public interface IDataAccessLayerService
     {

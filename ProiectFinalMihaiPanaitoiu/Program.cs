@@ -1,4 +1,3 @@
-using Data.Models.Interfaces;
 using Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.SwaggerGen;
