@@ -47,11 +47,11 @@ namespace Data.Services
             {
                 throw new InvalidIdException($"Invalid student Id {studentId}");
             }
-            if (ctx.Courses.Any(c => c.Id == courseId))
+            if (!ctx.Courses.Any(c => c.Id == courseId))
             {
                 throw new InvalidIdException($"Invalid course Id {courseId}");
             }
-            return ctx.Marks.Include(c => c.Course).Where(m => m.StudentId == studentId).Where(c => c.Id == courseId).ToList();
+            return ctx.Marks.Include(c => c.Course).Where(m => m.StudentId == studentId).Where(m => m.CourseId == courseId).ToList();
         }
 
 
@@ -61,7 +61,7 @@ namespace Data.Services
             {
                 throw new InvalidIdException($"Invalid student Id {studentId}");
             }
-            if (ctx.Courses.Any(c => c.Id == courseId))
+            if (!ctx.Courses.Any(c => c.Id == courseId))
             {
                 throw new InvalidIdException($"Invalid course Id {courseId}");
             }
